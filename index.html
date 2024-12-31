@@ -13976,8 +13976,12 @@ a.anchor-link {
 
 這是給你期末專題使用的 Notebook 模板。
 -->
-<p><strong>環境資料科學 期末報告</strong></p>
-<h1 id="%E8%87%AA%E5%8B%95%E5%8D%80%E5%88%86%E5%9C%B0%E9%9C%87%E6%B3%A2%E5%BD%A2%E4%B8%AD%E7%9A%84-P-%E6%B3%A2%E8%88%87-S-%E6%B3%A2">自動區分地震波形中的 P 波與 S 波<a class="anchor-link" href="#%E8%87%AA%E5%8B%95%E5%8D%80%E5%88%86%E5%9C%B0%E9%9C%87%E6%B3%A2%E5%BD%A2%E4%B8%AD%E7%9A%84-P-%E6%B3%A2%E8%88%87-S-%E6%B3%A2">¶</a></h1><p><strong>林芳伃 汪其璇 黎昕雯</strong></p>
+**環境資料科學 期末報告**
+
+# 自動區分地震波形中的 P 波與 S 波
+
+**林芳伃 汪其璇 黎昕雯**
+
 <!-- 作者順序不重要，歡迎使用筆畫或其他你們喜歡的順序。-->
 
 <h2 id="%E6%91%98%E8%A6%81">&#25688;&#35201;<a class="anchor-link" href="#%E6%91%98%E8%A6%81">&#182;</a></h2><p>本次專題，我們希望利用STA/LTA 方法，挑選可能的地震事件(P、S波的到時)。
@@ -13985,8 +13989,8 @@ a.anchor-link {
 <h1 id="%E6%AD%A3%E6%96%87">&#27491;&#25991;<a class="anchor-link" href="#%E6%AD%A3%E6%96%87">&#182;</a></h1><h2 id="%E5%8E%9F%E5%A7%8B%E7%9B%AE%E6%A8%99">&#21407;&#22987;&#30446;&#27161;<a class="anchor-link" href="#%E5%8E%9F%E5%A7%8B%E7%9B%AE%E6%A8%99">&#182;</a></h2><p>最初我們原本想透過使用現有的深度學習模型（如 PhaseNet-DAS 等），自動偵測並標記 DAS 數據中的 P 波和 S 波到達時間，以提升地震監測的效率，以利於地震定位，來了解臺北盆地西側的地質。期望可與中央氣象局的地震資料（2019.10 以後資料缺少規模2以下的地震事件）進行比對，期望能從DAS資料中找出中央氣象局有列出來的大地震事件以及規模較小的區域性地震。最後，可以利用cluster 或 K-mean 等工具來了解地震分群與該區域地質之間的關聯(如 Mildon et al.(2022) 和 Sun et al.(2024))。</p>
 <h2 id="%E4%BF%AE%E6%94%B9%E7%9B%AE%E6%A8%99">&#20462;&#25913;&#30446;&#27161;<a class="anchor-link" href="#%E4%BF%AE%E6%94%B9%E7%9B%AE%E6%A8%99">&#182;</a></h2><p>但為更好的實現與環境資料處理課堂中的連結，我們自己去訓練模型，來實現自動挑波。接著受限於DAS 數據缺少已挑選的P、S波到時資料，我們改地震儀而非DAS做為資料屬裡的數據。有由於原先設定的目標北台灣西側(位於臺北盆地與林口台地間)，缺少區域性地震事件，我們決定使用20180206位於台灣東側花蓮規模6.26的地震事件及其前震與餘震事件，對模型進行訓練。</p>
 <p><!--![image.png](https://drive.google.com/uc?id=1exvyWUAVHjsw_nPwAVSRVYIyOzJyVOZY)-->
-<img src="https://github.com/BloodTina/BloodTina.github.io/blob/BloodTina-1/01.png?raw=true" alt="image">
-<strong>圖 1:</strong> 20180206花蓮地震事件地震報告。(交通部中央氣象局地震測報中心提供)</p>
+<img src="https://github.com/BloodTina/BloodTina.github.io/blob/BloodTina-1/01.png?raw=true" alt="image"></p>
+<p><strong>圖 1:</strong> 20180206花蓮地震事件地震報告。(交通部中央氣象局地震測報中心提供)</p>
 <h2 id="%E8%B3%87%E6%96%99%E8%92%90%E9%9B%86">&#36039;&#26009;&#33936;&#38598;<a class="anchor-link" href="#%E8%B3%87%E6%96%99%E8%92%90%E9%9B%86">&#182;</a></h2><p>我們首先由自身所在的研究室(已獲導師同意)的數據調該次地震事件當天人工挑選的P、S波到時、偵測到地震的測站、地震事件發震時間，接著由中央氣象署下載偵測到地震事件測站的20180206整日的地震波，並依照測站區分為訓練集 ("HWA", "EHP", "ENA", "ESL")、測試集("ETM")。</p>
 <p><!--![image.png](https://drive.google.com/uc?id=1i2NGK6G-RagrhU022lhXSRFwC9LY_i10)-->
 <img src="https://github.com/BloodTina/BloodTina.github.io/blob/BloodTina-1/02.png?raw=true" alt="image"></p>
@@ -14032,15 +14036,15 @@ a.anchor-link {
 <p>b.損失值：驗證損失（0.8）高於訓練損失（0.5），表明模型可能存在一定過擬合現象。</p>
 <p>c.RMSE：測試集 RMSE（0.4783）略高於訓練集（0.4360），進一步反映模型在不同數據集上的表現差異。</p>
 <p>d.R²：測試集 R² 僅為 0.0850，顯示模型對數據的解釋能力較弱，仍需改進特徵提取或模型結構。</p>
-<p><strong>圖 3:</strong> Feature Importance</p>
-<p>Envelope 和 Feature 1,2 的重要性最高。</p>
 <p><!--![Feature Importance](https://drive.google.com/uc?id=1HYU5hiaXjvInYjgvyPmsC1CbML5K98Dj)-->
 <img src="https://github.com/BloodTina/BloodTina.github.io/blob/BloodTina-1/03.png?raw=true" alt="image"></p>
-<p>feature 1 為 max(env)，feature 2 為 mean(env)，feature 3 為 std(env)，feature 4 為 mean(sta/lta)，feature 5 為 mean(sta/lta)</p>
-<p><strong>圖 4:</strong> Prediction Distribution</p>
-<p>預測概率集中在中低範圍，可能表明模型對大多數數據的預測不夠自信。</p>
+<p><strong>圖 3:</strong> Feature Importance</p>
+<p>Envelope 和 Feature 1,2 的重要性最高。
+feature 1 為 max(env)，feature 2 為 mean(env)，feature 3 為 std(env)，feature 4 為 mean(sta/lta)，feature 5 為 mean(sta/lta)</p>
 <p><!--![Prediction Distribution](https://drive.google.com/uc?id=1i2NGK6G-RagrhU022lhXSRFwC9LY_i10)-->
 <img src="https://github.com/BloodTina/BloodTina.github.io/blob/BloodTina-1/04.png?raw=true" alt="image"></p>
+<p><strong>圖 4:</strong> Prediction Distribution</p>
+<p>預測概率集中在中低範圍，可能表明模型對大多數數據的預測不夠自信。</p>
 <h2 id="%E8%A8%8E%E8%AB%96">&#35342;&#35542;<a class="anchor-link" href="#%E8%A8%8E%E8%AB%96">&#182;</a></h2><p>根據結果，可以獲得本模型在自動區分地震波形中的 P 波與 S 波方面表現尚可，整體分類準確率約為 65% 至 71%。測試準確率（64.69%）與驗證準確率接近，表明模型在不同數據集上的泛化能力尚可，但仍有改進空間。特徵分析顯示，Envelope 等關鍵特徵對分類決策具有重要影響，模型成功捕捉了背景波形與 P/S 波之間的特徵差異。然而，模型對背景波形的分類較穩定，但對 P 波與 S 波的判別自信度偏低，可能受限於數據分布或特徵提取不足。此外，驗證損失略高於訓練損失，且訓練準確率高於測試準確率，顯示模型對訓練數據的依賴程度較高，存在一定的過擬合現象。以下為細項的可改善部分：</p>
 <h3 id="%E6%95%B8%E6%93%9A">&#25976;&#25818;<a class="anchor-link" href="#%E6%95%B8%E6%93%9A">&#182;</a></h3><p>a.擴充訓練與驗證數據集，增加 P 波與 S 波的標籤數量，並確保數據分布均衡，特別是在稀有波形事件的標注上。</p>
 <p>b.新增非地震事件之波形資料與標籤，訓練模型挑波能力。</p>
@@ -16961,7 +16965,8 @@ event_time_utc: 2018-02-06T16:35:46.000000Z
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Reference">Reference<a class="anchor-link" href="#Reference">&#182;</a></h1><p>Mildon, Z.K., Roberts, G.P., Faure Walker, J.P. et al. Surface faulting earthquake clustering controlled by fault and shear-zone interactions. Nat Commun 13, 7126 (2022). <a href="https://doi.org/10.1038/s41467-022-34821-5">https://doi.org/10.1038/s41467-022-34821-5</a></p>
+<h1 id="Reference">Reference<a class="anchor-link" href="#Reference">&#182;</a></h1><p>Central Weather Administration. (2012). Central Weather Administration Seismographic Network [Data set]. International Federation of Digital Seismograph Networks. <a href="https://doi.org/10.7914/SN/T5">https://doi.org/10.7914/SN/T5</a></p>
+<p>Mildon, Z.K., Roberts, G.P., Faure Walker, J.P. et al. Surface faulting earthquake clustering controlled by fault and shear-zone interactions. Nat Commun 13, 7126 (2022). <a href="https://doi.org/10.1038/s41467-022-34821-5">https://doi.org/10.1038/s41467-022-34821-5</a></p>
 <p>Sun, WF., Pan, SY., Huang, CM. et al. Deep learning-based earthquake catalog reveals the seismogenic structures of the 2022 MW 6.9 Chihshang earthquake sequence. Terr Atmos Ocean Sci 35, 5 (2024). <a href="https://doi.org/10.1007/s44195-024-00063-9">https://doi.org/10.1007/s44195-024-00063-9</a></p>
 
 </div>
